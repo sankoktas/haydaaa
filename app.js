@@ -15,18 +15,12 @@ const data = {
 
 const handleRequest = async (request) => {
   const url = new URL(request.url);
-  if (url.pathname === "/visits") {
+  if (url.pathname === "/count") {
     data.count++;
-    const body = `<h1>Visits: ${data.count}</h1>`;
-    return new Response(body, responseDetails);
-  } else if (url.pathname === "/meaning") {
-    const responseText = "Seeking truths beyond meaning of life, you will find 43.";
-    return new Response(responseText, responseDetails);
+    return new Response(await renderFile("count.eta", data), responseDetails);
   }
 
-  // Default response for other paths
-  const defaultResponse = "Nothing here yet.";
-  return new Response(defaultResponse, responseDetails);
+  return new Response("Hello you!");
 };
 
 serve(handleRequest, { port: 7777 });
